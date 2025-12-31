@@ -1,30 +1,30 @@
 package combat;
 
-import java.util.Random;
 import unit.Unit;
 
-public class Combat {
-	
-        static Random random = new Random();
 
-	    public static void attaquer(Unit attaquant, Unit defenseur) {
+	public class Combat {
 
-	        if (!attaquant.isAlive() || !defenseur.isAlive()) {
-	            return;
-	        }
+		 public static void attaquer(Unit attaquant, Unit cible) {
+		        if (!attaquant.estVivant()) {
+		            System.out.println(attaquant.getNom() + " est mort et ne peut pas attaquer !");
+		            return;
+		        }
+		        if (!cible.estVivant()) {
+		            System.out.println(cible.getNom() + " est déjà mort !");
+		            return;
+		        }
 
-	        int alea = random.nextInt(6);
-	        int degats = attaquant.getAttack()
-	                    - defenseur.getDefense()
-	                    + alea;
+		        
+		        System.out.println(attaquant.getNom() + " attaque " + cible.getNom() + " pour " + attaquant.getAttaque() + " dégâts !");
+		        cible.recevoirDegats(attaquant.getAttaque());
 
-	        if (degats < 0) {
-	            degats = 0;
-	        }
+		       
+		        System.out.println(cible.getNom() + " a maintenant " + cible.getPointsDeVie() + " PV");
 
-	        defenseur.takeDamage(degats);
-
-	   
-	      
-	    }
-	}
+		      
+		        if (!cible.estVivant()) {
+		            System.out.println(cible.getNom() + " est vaincu !");
+		        }
+		    }
+		}

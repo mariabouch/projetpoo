@@ -7,7 +7,7 @@ package batiments;
 		    protected int cout;
 		    protected int tempsConstruction;
 
-		    public Batiments(String nom, int tempsConstruction , int cout) {
+		    public Batiments(String nom, int cout , int tempsConstruction) {
 		        this.nom = nom;
 		        this.tempsConstruction = tempsConstruction;
 		        this.cout = cout ;

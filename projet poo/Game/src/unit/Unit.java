@@ -1,27 +1,28 @@
 package unit;
 
 public abstract class Unit {
-	
-	    protected String name;
-	    protected int hp;
-	    protected int attack;
-	    protected int defense;
-	    protected int range;
+    protected String nom;
+    protected int pointsDeVie;
+    protected int attaque;
 
-	    public boolean isAlive() {
-	        return hp > 0;
-	    }
+    public Unit(String nom, int pv, int attaque) {
+        this.nom = nom;
+        this.pointsDeVie = pv;
+        this.attaque = attaque;
+    }
 
-	    public void takeDamage(int dmg) {
-	        hp -= dmg;
-	    }
+    public String getNom() { return nom; }
+    public int getPointsDeVie() { return pointsDeVie; }
+    public int getAttaque() { return attaque; }
 
-	    public int getAttack() { return attack; }
-	    public int getDefense() { return defense; }
-	    public int getHp() { return hp; }
-	    public int getRange() { return range; }
-	    public String getName() { return name; }
-	}
+    public boolean estVivant() { return pointsDeVie > 0; }
+
+    public void recevoirDegats(int degats) {
+        pointsDeVie -= degats;
+        if (pointsDeVie < 0) pointsDeVie = 0;
+    }
+}
+
 
 
 

@@ -6,6 +6,7 @@ package game.main;
  import player.Player;
  import player.DeplacementPlayer;
  import batiments.*;
+ import unit.Unit;
  import unit.Soldier;
  import unit.Archer;
  import combat.Combat;
@@ -15,12 +16,12 @@ package game.main;
     	    	
      Scanner sc = new Scanner(System.in);
      Player joueur = new Player("Yasmine");
-     DeplacementPlayer deplacementPlayer = new DeplacementPlayer();
-     Carte carte = new Carte();
-
-    	  boolean enCours = true;
-
-    	  while (enCours) {
+     Carte carte = new Carte(10,6);
+     DeplacementPlayer deplacementPlayer = new DeplacementPlayer(carte);
+    
+       carte.generer();
+    	  boolean enCours = true ;
+    			  while(enCours) {
        carte.afficher(deplacementPlayer.getX(), deplacementPlayer.getY());
         System.out.println("\n=== MENU ===");
         System.out.println("1. Déplacer joueur (z,s,q,d)");
@@ -108,15 +109,34 @@ package game.main;
     	    			                    break;
 
     	    	case 6: 
-    	    	 if (!joueur.getUnits().isEmpty()) {
-    	    	System.out.println("=== COMBAT ===");
-    	    	if (joueur.getUnits().size() >= 2)
-    	     Combat.attaquer(joueur.getUnits().get(0), joueur.getUnits().get(1));
-    	    else 
-    	    	System.out.println("Pas assez d'unités pour combattre !");
-    	} 
-    	    	 else System.out.println("Vous n'avez pas d'unités !");
-    	    	 break;
+    	    	
+    	    		 if (joueur.getUnits().isEmpty()) {
+    	    		        System.out.println("Vous n'avez pas d'unités !");
+    	    		        break;
+    	    		    }
+
+    	    		    
+    	    		    Unit ennemi = Math.random() < 0.5 ? new Soldier() : new Archer();
+    	    		    System.out.println("Un ennemi apparaît : " + ennemi.getNom() + " (" + ennemi.getPointsDeVie() + " PV)");
+
+    	    		    
+    	    		    System.out.println("Choisir une unité pour attaquer :");
+    	    		    for (int k = 0; k < joueur.getUnits().size(); k++) {
+    	    		        System.out.println((k+1) + ". " + joueur.getUnits().get(k).getClass().getSimpleName());
+    	    		    }
+    	    		    int choixUnite = sc.nextInt() - 1;
+
+    	    		    if (choixUnite >= 0 && choixUnite < joueur.getUnits().size()) {
+    	    		        Combat.attaquer(joueur.getUnits().get(choixUnite), ennemi);
+    	    		       
+    	    		        if (ennemi.estVivant()) {
+    	    		            System.out.println("L'ennemi riposte !");
+    	    		            Combat.attaquer(ennemi, joueur.getUnits().get(choixUnite));
+    	    		        }
+    	    		    } else {
+    	    		        System.out.println("Unité invalide !");
+    	    		    }
+    	    		    break;
 
     	        case 7: 
     	    	System.out.println("=== MES UNITÉS ===");

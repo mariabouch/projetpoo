@@ -47,9 +47,7 @@ public class Player {
     }
 
     public void productionAutomatique() {
-        for (Batiments b : batiments) {}
     }
-
     public void ajouterNourriture(int quantite) {
     	ressources.AjouterRessources("Nourriture", quantite);
     	}
